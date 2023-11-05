@@ -51,23 +51,61 @@ Funcionamiento
 
 ![ejemplo propio1](recursos/1.JPG)
 
-###### 1. Crear el almacen
+###### 2. Crear el almacen
 > Con **.createObjectStore** generamos el almacen llamado Clientes, cuya clave será *id* que senerará de forma automática
 > por autoincremento
+![ejemplo propio2](recursos/2.JPG)
 
+###### 3. Guardar en la BBDD
+> Para guardar en la IndexedDB debemos seguir los siguientes pasos:
+> * Crear una petición y adjuntarle un evento *'onsuccess'*
+> * Abrir una transacción con permiso de lectura-escritura
+> * Usar esa transacción para utilizar el almacen ObjectStore
+> * Añadir a ese almacen el nuevo registro
 
-![ejemplo propio1](recursos/2.JPG)
+![ejemplo propio3](recursos/3.JPG)
 
+###### 4. Recuperar datos y mostrarlos
+> Para recuperar datos de la IndexedDB debemos:
+> * Usar una transacción y el objeto de almacen
+> * Abrir un puntero y adjuntarle un evento *'success'*
+> * Rescatar los resultados de ese puntero en una *vista*
+> * Crear el HTML necesario para su visualización
+> * Avanzar al siguiente registro de la vista con *vista.continue()*
+
+![ejemplo propio4](recursos/4.JPG)
+
+###### 5. Editar datos ya existentes en la BBDD
+> Para editar:
+> * Tenemos que tener la id del registro a actualizar (esta recuperación de la id depende de la implementación que se haya
+utilizado expresamente en nuestro programa)
+> * Usar una vez más una transacción sobre la BBDD y su correspondiente objeto almacen
+> * Usar el método put() para almacen
+
+![ejemplo propio5](recursos/5.JPG)
+
+###### 6. Eliminar datos
+> Para eliminar:
+> * Tenemos que tener la id del registro a eliminar (esta recuperación de la id depende de la implementación que se haya
+    utilizado expresamente en nuestro programa)
+> * Usar una vez más una transacción sobre la BBDD y su correspondiente objeto almacen
+> * Usar el método delete(id) para almacen
+
+![ejemplo propio6](recursos/6.JPG)
+
+###### 6. Visualización de la BBDD en el navegador
+
+![ejemplo propio7](recursos/7.JPG)
 
 Referencias
 =
 
 * Working with IndexedDB. (2016, 1 enero). web.dev. https://web.dev/articles/indexeddb?hl=en
 * Introducción a IndexedDB. (2023, 1 noviembre). Manual Web. https://www.manualweb.net/html5/introduccion-indexedDB/
-* https://developer.mozilla.org/es/docs/Web/API/IndexedDB_API#browser_compatibility
+* IndexedDB - referencia de la API Web | MDN. (2023, 19 julio). https://developer.mozilla.org/es/docs/Web/API/IndexedDB_API#browser_compatibility
 * IDBINDEX - Web APIs | MDN. (2023, 28 febrero). https://developer.mozilla.org/en-US/docs/Web/API/IDBIndex
-* https://desarrolloweb.com/articulos/indexeddb.html
-* https://es.javascript.info/indexeddb
+* Entendiendo IndexedDB. (s.f.). DesarrolloWeb.com. https://desarrolloweb.com/articulos/indexeddb.html
+* Kantor, I. (s. f.). IndexedDB. https://es.javascript.info/indexeddb
 
 
 
