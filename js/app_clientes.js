@@ -8,20 +8,17 @@ const campo_empresa = document.querySelector('#empresa')
 const tabla = document.querySelector('#listado-clientes')
 const boton_agregar = document.querySelector('input[value="Agregar Cliente"]')
 const boton_guardar_cambios = document.querySelector('input[value="Guardar Cambios"]')
-let db // en ella almacenaremos la base de datos
-//let id_autoincremento = sessionStorage.getItem('id') || 0
+let db // almacenará el objeto de la base de datos
 let boton_editar = document.querySelector(".editar")
 let boton_eliminar = document.querySelector(".eliminar")
-
 
 // Funciones
 
 const iniciar_bd = () =>{
-    console.log('se inicia bbdd')
     let solicitud = indexedDB.open('clientesDB', 1)
     solicitud.addEventListener('error', mostrar_error)
     solicitud.addEventListener('success', recuperar_bd)
-    // Este evento crea la BBDD si no encuentra una creada
+    // upgradeneeded crea la BBDD si no encuentra una creada
     solicitud.addEventListener('upgradeneeded', crear_bd)
 
 }
@@ -32,6 +29,7 @@ const mostrar_error = (e) => {
 
 const recuperar_bd = (e) =>{
     db = e.target.result
+    // Si nos encontramos en la página index.html entonces mostraré en la tabla los clientes almacenados
     if ((window.location.pathname).includes('index')){
         mostrar_clientes()
     }
@@ -39,30 +37,25 @@ const recuperar_bd = (e) =>{
 }
 
 const crear_bd = (e) =>{
-    console.log('creando')
     db = e.target.result
+    // La clave de la BBDD va a ser el campo id, el cuál se generará por autoincremento automático
     db.createObjectStore('Clientes', { keyPath: 'id', autoIncrement: true });
-   // almacen.createIndex('indice', 'id', {unique:true})
 }
 
-
 const guardar_cliente = () =>{
-    console.log('entran en la función guardar')
     const peticion = indexedDB.open('ClientesDB', 1)
     peticion.onsuccess=()=> {
+        // Si la petición tiene éxito, creamos un objeto con la info de los campos del formulario
         const cliente = {
-            //id: `${(id_autoincremento + 1)}`,
             nombre: campo_nombre.value,
             correo: campo_correo.value,
             telefono: campo_telefono.value,
             empresa: campo_empresa.value
         }
-        //id_autoincremento++
+        // Y mediante una transacción añadimos ese objeto al almacén
         let transaccion = db.transaction(['Clientes'], 'readwrite')
         let almacen = transaccion.objectStore('Clientes')
-        //console.log(cliente.id)
         almacen.add(cliente)
-        console.log(cliente) //LOOOOG
         limpiar_html_formulario()
     }
 }
@@ -79,6 +72,7 @@ const mostrar_clientes = () =>{
     const almacen = transaccion.objectStore('Clientes')
     const puntero = almacen.openCursor()
     puntero.addEventListener('success', (e)=>{
+        // El puntero nos permite crear una vista con la información solicitada
         const vista = e.target.result
         if(vista) {
             const fila = document.createElement('tr')
@@ -94,22 +88,22 @@ const mostrar_clientes = () =>{
                     </td>                   
                 `
             tabla.appendChild(fila)
+            // La vista devuelve los registros de 1 en 1, por tanto, vamos avanzando al siguiente con continue()
             vista.continue()
             boton_editar = fila.querySelector(".editar")
             boton_eliminar = fila.querySelector(".eliminar")
-
-            // Los eventos de esos botones se deben generar cuando se crean
+            // Los eventos de los nuevos botones creados se deben generar en el momento de su creación
             boton_editar.onclick = (c) =>{
+                //pasamos el evento para posteriormente pasar recuperar la id almacenada en el botón
                 cambiar_pagina_edicion(c)
             }
             boton_eliminar.onclick = (b)=>{
                 eliminar_cliente(b)
             }
-           // sessionStorage.setItem('id', `${vista.value.id}`)
+
         }
     })
 }
-
 
 
 const cambiar_pagina_edicion = (c) =>{
@@ -117,8 +111,8 @@ const cambiar_pagina_edicion = (c) =>{
     window.location="editar-cliente.html"
 }
 
-
 const editar = ()=> {
+    // Recuperamos la id de la sessionStorage para saber que registro vamos a modificar
     const id = parseInt(sessionStorage.getItem('id'))
     const cliente ={
         id:id,
@@ -130,10 +124,12 @@ const editar = ()=> {
     let transaccion = db.transaction(['Clientes'], 'readwrite')
     let almacen = transaccion.objectStore('Clientes')
     almacen.put(cliente)
+    // Limpiamos los campos
     limpiar_html_formulario()
 }
 
-
+// La función recuperar_datos se utilizará cuando pasamos a la página de edición
+// para así mostrar los datos del registro que queremos modificar
 const recuperar_datos=() =>{
     const id = parseInt(sessionStorage.getItem('id'))
     const peticion = indexedDB.open('ClientesDB', 1)
@@ -141,7 +137,6 @@ const recuperar_datos=() =>{
         const transaccion = db.transaction('Clientes', 'readwrite')
         const almacen = transaccion.objectStore('Clientes')
         const puntero = almacen.openCursor()
-        //función mostrar
         puntero.addEventListener('success', (e)=>{
             const vista = e.target.result
             if (vista){
@@ -159,24 +154,18 @@ const recuperar_datos=() =>{
 }
 
 const eliminar_cliente=(b)=>{
-    console.log('entra en funcion eliminar')
     const id = parseInt(b.target.id)
-    console.log(typeof id)
     let transaccion = db.transaction(['Clientes'], 'readwrite')
     let almacen = transaccion.objectStore('Clientes')
     almacen.delete(id)
-    limpiar_html_tabla(id)
+    limpiar_html_tabla()
     mostrar_clientes()
-
 }
 
-const limpiar_html_tabla=(id_fila)=>{
-    console.log('entra en limpiar tabla')
+const limpiar_html_tabla=()=>{
     while (tabla.firstElementChild){
-        console.log('y entra en el bucle')
         tabla.firstElementChild.remove()
     }
-
 }
 
 // Eventos
@@ -184,29 +173,25 @@ const limpiar_html_tabla=(id_fila)=>{
 document.addEventListener('DOMContentLoaded', (e)=>{
     iniciar_bd()
     if (window.location.pathname.includes('editar-cliente.html')){
-        console.log('estamos en editar')
         recuperar_datos()
         if (boton_guardar_cambios!==null) {
             boton_guardar_cambios.addEventListener('click', (e) => {
-                console.log('se ha almacenado el cliente')
                 e.preventDefault()
                 editar()
             })
         }
 
     }
-
 })
 
 if (boton_agregar!==null) {
     boton_agregar.addEventListener('click', (e) => {
-        console.log('se ha almacenado el cliente')
         e.preventDefault()
         guardar_cliente()
     })
 }
 
-
+// Para más información sobre el funcionamiento del código y de IndexedDB consultar la documentación (Guía_IndexedDB.md)
 
 
 
