@@ -171,7 +171,6 @@ const limpiar_html_tabla=()=>{
 document.addEventListener('DOMContentLoaded', (e)=>{
     iniciar_bd()
     if (window.location.pathname.includes('editar-cliente.html')){
-        console.log('todo bien')
         recuperar_datos()
         boton_guardar_cambios.addEventListener('click', (e) => {
             e.preventDefault()
@@ -179,7 +178,6 @@ document.addEventListener('DOMContentLoaded', (e)=>{
         })
     }
     if (window.location.pathname.includes('nuevo-cliente.html')){
-        console.log('todo bien2')
         boton_agregar.addEventListener('click', (e) => {
             e.preventDefault()
             guardar_cliente()
