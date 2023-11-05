@@ -1,6 +1,6 @@
 // Aunque finalmente no hemos visto los import/export
 // he decidido hacer una pequeña prueba trayéndome un objeto que uso también en validaciones
-// el uso de este import queda explicado en metodos_validaciones.js, en la línea 154
+// el uso de este import queda explicado en metodos_validaciones.js, en la línea 146
 import {objeto_formulario} from './metodos_validacion.js'
 
 // Variables y selectores necesarios
