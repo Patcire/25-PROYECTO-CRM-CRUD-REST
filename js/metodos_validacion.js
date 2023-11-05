@@ -59,21 +59,17 @@ const validar = (e) =>{
 
 const comprobar_objeto=() =>{
     const values = Object.values(objeto_formulario)
-    console.log(values)
     if (values.includes('')){
-        console.log('se caquea')
         if (window.location.pathname.includes('editar-cliente.html')){
             boton_guardar_cambios.classList.add('opacity-50')
             boton_guardar_cambios.disabled= true
         }
         else if (window.location.pathname.includes('nuevo-cliente.html')){
-            console.log('comp`robar entra en nuevo')
             boton_agregar.classList.add('opacity-50')
             boton_agregar.disabled= true
         }
     }
     else {
-        console.log('todos campos completos')
         if (window.location.pathname.includes('editar-cliente.html')){
             boton_guardar_cambios.classList.remove('opacity-50')
             boton_guardar_cambios.disabled= false
