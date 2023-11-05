@@ -1,0 +1,18 @@
+td{
+    padding: 12px 24px;
+}
+
+.botones-acciones{
+    display: flex;
+    gap: 10px;
+}
+
+.editar{
+    background-color: #4de097;
+    width: 35px;
+}
+
+.eliminar{
+    width: 15px;
+    background-color: #e55b5b;
+}

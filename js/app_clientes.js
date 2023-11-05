@@ -1,3 +1,7 @@
+// Aunque finalmente no hemos visto los import/export
+// he decidido hacer una pequeña prueba trayéndome un objeto que uso también en validaciones
+// el uso de este import queda explicado en metodos_validaciones.js, en la línea 154
+import {objeto_formulario} from './metodos_validacion.js'
 
 // Variables y selectores necesarios
 
@@ -79,11 +83,11 @@ const mostrar_clientes = () =>{
                     <td>${vista.value.nombre}</td>
                     <td>${vista.value.telefono}</td>
                     <td>${vista.value.empresa}</td>
-                    <td>                
-                        <button class="editar" id="${vista.value.id}">Edit </a>
-                    </td> 
-                    </td> 
-                        <button class="eliminar" id="${vista.value.id}">X</button>
+                    <td>   
+                        <div class="botones-acciones">            
+                            <button class="editar" id="${vista.value.id}">Edit </a>
+                            <button class="eliminar" id="${vista.value.id}">X</button>
+                        </div> 
                     </td>                   
                 `
             tabla.appendChild(fila)
@@ -139,10 +143,16 @@ const recuperar_datos=() =>{
             const vista = e.target.result
             if (vista){
                 if (vista.value.id === id){
+                    // Los campos muestran la información de la IndexedDB
                     campo_nombre.value = vista.value.nombre
                     campo_correo.value = vista.value.correo
                     campo_telefono.value = vista.value.telefono
                     campo_empresa.value = vista.value.empresa
+                    // También rellenamos el objeto_formulario que utilizamos en las validaciones y que hemos importado
+                    objeto_formulario.nombre=vista.value.nombre
+                    objeto_formulario.email=vista.value.correo
+                    objeto_formulario.telefono=vista.value.telefono
+                    objeto_formulario.empresa=vista.value.empresa
                     return
                 }
                 vista.continue()
