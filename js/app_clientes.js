@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', (e)=>{
     }
 })
 
-// Para más información sobre el funcionamiento del código y de IndexedDB consultar la documentación del proyecto (Guía_IndexedDB.md)
+// Para más información sobre el funcionamiento del código y de IndexedDB consultar la documentación del proyecto (README.md)
 
 
 
