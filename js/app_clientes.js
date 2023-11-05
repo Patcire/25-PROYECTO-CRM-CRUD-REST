@@ -33,7 +33,6 @@ const recuperar_bd = (e) =>{
     if ((window.location.pathname).includes('index')){
         mostrar_clientes()
     }
-
 }
 
 const crear_bd = (e) =>{
@@ -100,7 +99,6 @@ const mostrar_clientes = () =>{
             boton_eliminar.onclick = (b)=>{
                 eliminar_cliente(b)
             }
-
         }
     })
 }
@@ -173,25 +171,23 @@ const limpiar_html_tabla=()=>{
 document.addEventListener('DOMContentLoaded', (e)=>{
     iniciar_bd()
     if (window.location.pathname.includes('editar-cliente.html')){
+        console.log('todo bien')
         recuperar_datos()
-        if (boton_guardar_cambios!==null) {
-            boton_guardar_cambios.addEventListener('click', (e) => {
-                e.preventDefault()
-                editar()
-            })
-        }
-
+        boton_guardar_cambios.addEventListener('click', (e) => {
+            e.preventDefault()
+            editar()
+        })
+    }
+    if (window.location.pathname.includes('nuevo-cliente.html')){
+        console.log('todo bien2')
+        boton_agregar.addEventListener('click', (e) => {
+            e.preventDefault()
+            guardar_cliente()
+        })
     }
 })
 
-if (boton_agregar!==null) {
-    boton_agregar.addEventListener('click', (e) => {
-        e.preventDefault()
-        guardar_cliente()
-    })
-}
-
-// Para más información sobre el funcionamiento del código y de IndexedDB consultar la documentación (Guía_IndexedDB.md)
+// Para más información sobre el funcionamiento del código y de IndexedDB consultar la documentación del proyecto (Guía_IndexedDB.md)
 
 
 
