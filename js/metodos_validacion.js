@@ -131,10 +131,10 @@ const resetear_objeto_formulario = () =>{
 if (window.location.pathname.includes('nuevo-cliente.html')){
     resetear_objeto_formulario()
     comprobar_objeto()
-    campo_email.addEventListener('input', validar)
-    campo_telefono.addEventListener('input', validar)
-    campo_nombre.addEventListener('input', validar)
-    campo_empresa.addEventListener('input', validar)
+    campo_email.addEventListener('blur', validar)
+    campo_telefono.addEventListener('blur', validar)
+    campo_nombre.addEventListener('blur', validar)
+    campo_empresa.addEventListener('blur', validar)
     boton_agregar.addEventListener('click', (e)=>{
         mensaje_exito_enviar(e)
         resetear_objeto_formulario()
@@ -142,16 +142,17 @@ if (window.location.pathname.includes('nuevo-cliente.html')){
     })
 }
 
+// Aunque no se pedía en las especificaciones se ha validado también el formulario de edición
 if (window.location.pathname.includes('editar-cliente.html')){
     // Para que el objeto_formulario se actualice con los datos recuperados del registro
     // que se está mostrando en el HTML, en app.js, cuando recupero los datos, además de mostrarlos
     // los almaceno en objeto_formulario, para así no tener que abrir otra vez la base de datos
     // esto lo consigo gracias al export/import
     comprobar_objeto()
-    campo_email.addEventListener('input', validar)
-    campo_telefono.addEventListener('input', validar)
-    campo_nombre.addEventListener('input', validar)
-    campo_empresa.addEventListener('input', validar)
+    campo_email.addEventListener('blur', validar)
+    campo_telefono.addEventListener('blur', validar)
+    campo_nombre.addEventListener('blur', validar)
+    campo_empresa.addEventListener('blur', validar)
     // Por último añadimos un evento al pinchar el botón
     boton_guardar_cambios.addEventListener('click', (e)=>{
         mensaje_exito_enviar(e)
