@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', (e)=>{
         })
     }
 
-    if (window.location.pathname.includes('nuevo-cliente.html')){
+    else if (window.location.pathname.includes('nuevo-cliente.html')){
         // Validación
         resetear_objeto_formulario()
         comprobar_objeto()
